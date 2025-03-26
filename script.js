@@ -35,7 +35,7 @@ function signUp() {
 
     auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            window.location.href = "dashboard.html";  // Redirect to dashboard after signup
+            window.location.href = "dashboard.html";  // Redirect to the dashboard after signup
         })
         .catch((error) => {
             alert(error.message);  // Show error if something goes wrong
