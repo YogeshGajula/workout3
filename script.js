@@ -1,4 +1,4 @@
-// Firebase Configuration (Your actual config)
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC1Lc1QGUf8-QZv0_aDbCb5-bQLbl7aL7U",
     authDomain: "workout-tracker-d1e86.firebaseapp.com",
@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Login
+// Login Function
 function login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -28,7 +28,21 @@ function login() {
         });
 }
 
-// Log Out
+// Sign-Up Function
+function signUp() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            window.location.href = "dashboard.html";  // Redirect to dashboard after signup
+        })
+        .catch((error) => {
+            alert(error.message);  // Show error if something goes wrong
+        });
+}
+
+// Logout Function
 function logout() {
     auth.signOut().then(() => {
         window.location.href = "index.html"; // Redirect to login page
