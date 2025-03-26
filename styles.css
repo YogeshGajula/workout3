@@ -1,5 +1,5 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; margin: 0 auto; max-width: 800px; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-image: url('https://raw.githubusercontent.com/YogeshGajula/workout/f470e3e03b6deafcd6d82486423cbff9f9c38e79/image.jpg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 15px; margin: 0 auto; max-width: 800px; }
 h1 { text-align: center; color: white; margin-bottom: 20px; }
 button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
 button:hover { background-color: #0056b3; }
