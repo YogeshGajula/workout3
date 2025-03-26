@@ -21,12 +21,13 @@ function login() {
 
     auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            window.location.href = "dashboard.html"; // Redirect to dashboard
+            window.location.href = "dashboard.html"; // Redirect to dashboard after login
         })
         .catch((error) => {
             alert(error.message);
         });
 }
+
 
 // Sign-Up Function
 function signUp() {
