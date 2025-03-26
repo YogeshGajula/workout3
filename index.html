@@ -3,140 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Tracker</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
-
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-image: url('https://raw.githubusercontent.com/YogeshGajula/workout/f470e3e03b6deafcd6d82486423cbff9f9c38e79/image.jpg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 15px; margin: 0 auto; max-width: 800px; }
-        h1 { text-align: center; color: white; margin-bottom: 20px; font-size: 2em; text-transform: uppercase; font-weight: bold; }
-        button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
-        button:hover { background-color: #0056b3; }
-        #workout-container { background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); display: none; }
-    </style>
+    <title>Login - Workout Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Workout Tracker</h1>
-
-    <!-- Firebase Authentication -->
     <div id="auth-container">
-        <h2>Sign Up / Login</h2>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="signUp()">Sign Up</button>
+        <h2>Login to Workout Tracker</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
         <button onclick="login()">Login</button>
-        <button onclick="logout()" style="display:none;" id="logout-btn">Logout</button>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
 
-    <!-- Workout Days -->
-    <div id="day-selection">
-        <button onclick="loadWorkout(1)">Day 1</button>
-        <button onclick="loadWorkout(2)">Day 2</button>
-        <button onclick="loadWorkout(3)">Day 3</button>
-        <button onclick="loadWorkout(4)">Day 4</button>
-        <button onclick="loadWorkout(5)">Day 5</button>
-        <button onclick="loadWorkout(6)">Day 6</button>
-    </div>
-
-    <!-- Workout Entry -->
-    <div id="workout-container">
-        <button onclick="goBack()">Back</button>
-        <div id="workout-list"></div>
-        <button onclick="saveWorkout()">Save Workout</button>
-    </div>
-
-    <!-- Workout History -->
-    <div id="history-container">
-        <button onclick="loadWorkoutHistory()">View Workout History</button>
-        <div id="history"></div>
-    </div>
-
-    <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyC1Lc1QGUf8-QZv0_aDbCb5-bQLbl7aL7U",
-            authDomain: "workout-tracker-d1e86.firebaseapp.com",
-            projectId: "workout-tracker-d1e86",
-            storageBucket: "workout-tracker-d1e86.appspot.com",
-            messagingSenderId: "869399078280",
-            appId: "1:869399078280:web:116627e28adb552706063d"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Workout Exercises Dictionary
-        const workouts = {
-            1: ["Bench Press - 4x5", "Overhead Press - 4x5", "Weighted Dips - 3x6-8"],
-            2: ["Deadlifts - 4x5", "Weighted Pull-Ups - 4x6-8", "Bent Over Rows - 3x8-10"],
-            3: ["Squats - 4x5", "Romanian Deadlifts - 3x8-10", "Leg Press - 3x12"],
-            4: ["Incline Dumbbell Press - 4x8-10", "Machine Shoulder Press - 4x10-12", "Chest Flys - 3x12-15"],
-            5: ["Lat Pulldown - 4x10-12", "Seated Cable Row - 3x10-12", "Hammer Curls - 3x12-15"],
-            6: ["Bulgarian Split Squats - 3x10-12", "Seated Calf Raises - 4x12-15", "Hamstring Curls - 3x12-15"]
-        };
-
-        function signUp() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(() => alert("User Registered!"))
-                .catch(error => alert(error.message));
-        }
-
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => alert("Logged in!"))
-                .catch(error => alert(error.message));
-        }
-
-        function logout() {
-            auth.signOut().then(() => alert("Logged out!"));
-        }
-
-        function loadWorkout(day) {
-            document.getElementById("day-selection").style.display = "none";
-            document.getElementById("workout-container").style.display = "block";
-            const container = document.getElementById("workout-list");
-            container.innerHTML = `<h3>Workout for Day ${day}</h3>`;
-            
-            workouts[day].forEach(exercise => {
-                container.innerHTML += `<div>
-                    <h4>${exercise}</h4>
-                    <input type="number" placeholder="Weight"> 
-                    <input type="number" placeholder="Reps">
-                </div>`;
-            });
-        }
-
-        function goBack() {
-            document.getElementById("day-selection").style.display = "grid";
-            document.getElementById("workout-container").style.display = "none";
-        }
-
-        function saveWorkout() {
-            const user = auth.currentUser;
-            if (!user) { alert("Please log in!"); return; }
-
-            const workoutData = [];
-            document.querySelectorAll("#workout-list div").forEach(div => {
-                const exercise = div.querySelector("h4").textContent;
-                const weight = div.querySelector("input[placeholder='Weight']").value || "N/A";
-                const reps = div.querySelector("input[placeholder='Reps']").value || "N/A";
-                workoutData.push({ exercise, weight, reps });
-            });
-
-            db.collection("workouts").add({ userId: user.uid, workoutData, timestamp: firebase.firestore.FieldValue.serverTimestamp() })
-                .then(() => alert("Workout saved!"))
-                .catch(error => console.error(error));
-        }
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
