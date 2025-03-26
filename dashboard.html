@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to Workout Tracker</h1>
+    
+    <div id="day-selection">
+        <button onclick="loadWorkout(1)">Day 1</button>
+        <button onclick="loadWorkout(2)">Day 2</button>
+        <button onclick="loadWorkout(3)">Day 3</button>
+        <button onclick="loadWorkout(4)">Day 4</button>
+        <button onclick="loadWorkout(5)">Day 5</button>
+        <button onclick="loadWorkout(6)">Day 6</button>
+    </div>
+
+    <div id="history-container">
+        <button onclick="loadWorkoutHistory()">View Workout History</button>
+        <div id="history"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
