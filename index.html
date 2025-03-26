@@ -3,20 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Workout Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Login & Signup</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1Lc1QGUf8-QZv0_aDbCb5-bQLbl7aL7U",
+            authDomain: "workout-tracker-d1e86.firebaseapp.com",
+            projectId: "workout-tracker-d1e86",
+            storageBucket: "workout-tracker-d1e86.firebasestorage.app",
+            messagingSenderId: "869399078280",
+            appId: "1:869399078280:web:116627e28adb552706063d",
+            measurementId: "G-8V6GQVFWHQ"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        document.getElementById('signup-btn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => alert('Signup Successful!'))
+                .catch(error => alert(error.message));
+        });
+        
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    alert('Login Successful!');
+                    document.getElementById('logout-btn').style.display = 'block';
+                })
+                .catch(error => alert(error.message));
+        });
+        
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                alert('Logged Out!');
+                document.getElementById('logout-btn').style.display = 'none';
+            });
+        });
+    </script>
 </head>
 <body>
-    <div id="auth-container">
-        <h2>Login to Workout Tracker</h2>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button onclick="login()">Login</button>
-        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    <script src="script.js"></script>
+    <h2>Login & Signup</h2>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button id="signup-btn">Sign Up</button>
+    <button id="login-btn">Log In</button>
+    <button id="logout-btn" style="display:none;">Log Out</button>
 </body>
 </html>
